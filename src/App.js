@@ -1,12 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import Home from './routes/home/home.component';
+import Authentication from './routes/authentication/authentication.component';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1>pc-configurator</h1>
-    </div>
+    <Routes>
+      <Route path='/' element={<Home />} />
+      <Route path='auth' element={<Authentication />} />
+    </Routes>
   );
-}
+};
 
 export default App;
