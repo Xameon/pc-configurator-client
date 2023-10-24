@@ -1,7 +1,12 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import FormInput from '../form-input/form-input.component';
-import './sign-in-form.styles.scss';
 import { useState, useEffect } from 'react';
+
+import { API_REQUESTS, request } from '../../api/api';
+
+import FormInput from '../form-input/form-input.component';
+import Button from '../button/button.component';
+
+import './sign-in-form.styles.scss';
 
 const defaultFormFields = { email: '', password: '' };
 
@@ -13,19 +18,17 @@ const SignInForm = () => {
   useEffect(() => {
     if (googleUser) {
       const { access_token } = googleUser;
-      const passAccessToken = async () => {
-        const response = await fetch(
-          'http://pc-api-env.eba-ff8mdmg7.us-east-1.elasticbeanstalk.com/api/auth/google',
-          {
-            headers: {
-              authorization: access_token,
-            },
-          }
-        );
-        const { accessToken, refreshToken } = await response.json();
+
+      const passGoogleUser = async () => {
+        const data = await request(API_REQUESTS.googleAuth, 'GET', {
+          headers: {
+            authorization: access_token,
+          },
+        });
+        console.log(data);
       };
 
-      passAccessToken();
+      passGoogleUser();
     }
   }, [googleUser]);
 
@@ -42,26 +45,17 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await fetch(
-        'http://pc-api-env.eba-ff8mdmg7.us-east-1.elasticbeanstalk.com/api/auth/login',
-        {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-    } catch {}
+    const data = await request(API_REQUESTS.login, 'POST', {
+      body: { email, password },
+    });
+
+    console.log(data);
   };
 
   return (
     <div className='sign-in-container'>
       <h2>Already have an account?</h2>
-      <span>Sign in with your email and password</span>
+      <h3>Sign in with your email and password</h3>
       <form onSubmit={(event) => handleSubmit(event)}>
         <FormInput
           label='Email'
@@ -78,10 +72,16 @@ const SignInForm = () => {
           onChange={(e) => handleChange(e)}
         />
         <div className='buttons-container'>
-          <button type='submit'>Sign In</button>
-          <button type='button' onClick={() => loginWithGoogle()}>
+          <Button buttonStyle={'sign-in'} type='submit'>
+            Sign In
+          </Button>
+          <Button
+            buttonStyle={'google-sign-in'}
+            type='button'
+            onClick={() => loginWithGoogle()}
+          >
             Sign In With Google
-          </button>
+          </Button>
         </div>
       </form>
     </div>

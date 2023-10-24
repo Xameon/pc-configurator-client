@@ -1,0 +1,19 @@
+.sign-up-container {
+  width: 30%;
+
+  .group {
+    margin: 40px 0px;
+  }
+
+  .buttons-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 40px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .sign-up-container {
+    width: 100%;
+  };
+}
