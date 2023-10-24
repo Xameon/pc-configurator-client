@@ -1,5 +1,9 @@
 import { useState } from 'react';
+import { API_REQUESTS, request } from '../../api/api';
+
 import FormInput from '../form-input/form-input.component';
+import Button from '../button/button.component';
+
 import './sign-up-form.styles.scss';
 
 const defaultFormFields = {
@@ -26,27 +30,17 @@ const SignUpForm = () => {
       return;
     }
 
-    try {
-      const response = await fetch(
-        'http://pc-api-env.eba-ff8mdmg7.us-east-1.elasticbeanstalk.com/api/auth/register',
-        {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({ name, email, password }),
-        }
-      );
+    const data = await request(API_REQUESTS.register, 'POST', {
+      body: { name, email, password },
+    });
 
-      const data = response.json();
-      console.log(data);
-    } catch {}
+    console.log(data);
   };
 
   return (
     <div className='sign-up-container'>
       <h2>Don't have an account?</h2>
-      <span>Sign up with your email and password</span>
+      <h3>Sign up with your email and password</h3>
       <form onSubmit={(e) => handleSubmit(e)}>
         <FormInput
           label='Name'
@@ -79,7 +73,11 @@ const SignUpForm = () => {
           name='confirmPassword'
           onChange={(e) => handleChange(e)}
         />
-        <button type='submit'>Sign Up</button>
+        <div className='buttons-container'>
+          <Button buttonStyle={'sign-up'} type='submit'>
+            Sign Up
+          </Button>
+        </div>
       </form>
     </div>
   );
