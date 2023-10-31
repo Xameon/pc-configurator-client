@@ -1,36 +1,40 @@
 import { useGoogleLogin } from '@react-oauth/google';
+import { useState, useContext } from 'react';
+
+import { API_REQUESTS, request } from '../../api/api';
+
+import { UserContext } from '../../contexts/user.context';
+
 import FormInput from '../form-input/form-input.component';
+import Button from '../button/button.component';
+
 import './sign-in-form.styles.scss';
-import { useState, useEffect } from 'react';
+import { setLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
 
 const defaultFormFields = { email: '', password: '' };
 
 const SignInForm = () => {
-  const [googleUser, setGoogleUser] = useState(null);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-
-  useEffect(() => {
-    if (googleUser) {
-      const { access_token } = googleUser;
-      const passAccessToken = async () => {
-        const response = await fetch(
-          'http://pc-api-env.eba-ff8mdmg7.us-east-1.elasticbeanstalk.com/api/auth/google',
-          {
-            headers: {
-              authorization: access_token,
-            },
-          }
-        );
-        const { accessToken, refreshToken } = await response.json();
-      };
-
-      passAccessToken();
-    }
-  }, [googleUser]);
+  const { setCurrentUser } = useContext(UserContext);
 
   const loginWithGoogle = useGoogleLogin({
-    onSuccess: (codeResponse) => setGoogleUser(codeResponse),
+    onSuccess: async (codeResponse) => {
+      if (codeResponse) {
+        const { access_token } = codeResponse;
+        const data = await request(API_REQUESTS.googleAuth, 'GET', {
+          headers: {
+            authorization: access_token,
+          },
+        });
+
+        setLocalStorageItemsHelper({
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+        });
+        setCurrentUser(data.user);
+      }
+    },
     onError: (error) => console.log('Login Failed:', error),
   });
 
@@ -42,26 +46,21 @@ const SignInForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await fetch(
-        'http://pc-api-env.eba-ff8mdmg7.us-east-1.elasticbeanstalk.com/api/auth/login',
-        {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-    } catch {}
+    const data = await request(API_REQUESTS.login, 'POST', {
+      body: { email, password },
+    });
+
+    setLocalStorageItemsHelper({
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    });
+    setCurrentUser(data.user);
   };
 
   return (
     <div className='sign-in-container'>
       <h2>Already have an account?</h2>
-      <span>Sign in with your email and password</span>
+      <h3>Sign in with your email and password</h3>
       <form onSubmit={(event) => handleSubmit(event)}>
         <FormInput
           label='Email'
@@ -78,10 +77,14 @@ const SignInForm = () => {
           onChange={(e) => handleChange(e)}
         />
         <div className='buttons-container'>
-          <button type='submit'>Sign In</button>
-          <button type='button' onClick={() => loginWithGoogle()}>
+          <Button type='submit'>Sign In</Button>
+          <Button
+            buttonStyle={'google-sign-in'}
+            type='button'
+            onClick={() => loginWithGoogle()}
+          >
             Sign In With Google
-          </button>
+          </Button>
         </div>
       </form>
     </div>

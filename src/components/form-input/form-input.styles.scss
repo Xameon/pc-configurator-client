@@ -1,5 +1,15 @@
 .group {
   display: flex;
   flex-direction: column;
-  width: 25%;
+  border-bottom: 1px solid black;
+
+  input {
+    outline: none;
+    border: 0px;
+    font-size: 1.2rem;
+  }
+
+  input[type='password'] {
+    letter-spacing: 3px;
+  }
 }

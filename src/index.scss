@@ -1,8 +1,23 @@
-body {
-  margin: 0;
-  font-family: 'Quicksand', sans-serif;
+:root {
+  --main-bg-color: white;
+  --main-font: 'Quicksand', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--main-bg-color);
+  margin: 0;
+  font-family: var(--main-font);
+}
+
+input {
+  background-color: transparent;
+  font-family: var(--main-font);
+}
+
+button {
+  font-family: var(--main-font);
 }
 
 code {

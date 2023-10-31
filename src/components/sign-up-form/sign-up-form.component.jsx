@@ -1,5 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { API_REQUESTS, request } from '../../api/api';
+import { setLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
+
+import { UserContext } from '../../contexts/user.context';
+
 import FormInput from '../form-input/form-input.component';
+import Button from '../button/button.component';
+
 import './sign-up-form.styles.scss';
 
 const defaultFormFields = {
@@ -12,6 +19,7 @@ const defaultFormFields = {
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { name, email, password, confirmPassword } = formFields;
+  const { setCurrentUser } = useContext(UserContext);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -26,27 +34,21 @@ const SignUpForm = () => {
       return;
     }
 
-    try {
-      const response = await fetch(
-        'http://pc-api-env.eba-ff8mdmg7.us-east-1.elasticbeanstalk.com/api/auth/register',
-        {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({ name, email, password }),
-        }
-      );
+    const data = await request(API_REQUESTS.register, 'POST', {
+      body: { name, email, password },
+    });
 
-      const data = response.json();
-      console.log(data);
-    } catch {}
+    setLocalStorageItemsHelper({
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    });
+    setCurrentUser(data.user);
   };
 
   return (
     <div className='sign-up-container'>
       <h2>Don't have an account?</h2>
-      <span>Sign up with your email and password</span>
+      <h3>Sign up with your email and password</h3>
       <form onSubmit={(e) => handleSubmit(e)}>
         <FormInput
           label='Name'
@@ -79,7 +81,9 @@ const SignUpForm = () => {
           name='confirmPassword'
           onChange={(e) => handleChange(e)}
         />
-        <button type='submit'>Sign Up</button>
+        <div className='buttons-container'>
+          <Button type='submit'>Sign Up</Button>
+        </div>
       </form>
     </div>
   );
