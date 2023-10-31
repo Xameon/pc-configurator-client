@@ -1,10 +1,10 @@
-const API_URL =
-  'http://pc-api-env.eba-ff8mdmg7.us-east-1.elasticbeanstalk.com/api';
+const API_URL = 'https://pc-api.fly.dev/api';
 
 export const API_REQUESTS = {
   googleAuth: `${API_URL}/auth/google`,
   register: `${API_URL}/auth/register`,
   login: `${API_URL}/auth/login`,
+  auth: `${API_URL}/auth`,
 };
 
 export const request = async (url, method, args) => {

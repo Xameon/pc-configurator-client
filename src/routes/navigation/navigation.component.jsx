@@ -2,7 +2,7 @@ import { useContext, Fragment } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { UserContext, defaultUser } from '../../contexts/user.context';
-import { setLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
+import { removeLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
 
 const Navigation = () => {
   const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -21,7 +21,7 @@ const Navigation = () => {
           <button
             onClick={() => {
               setCurrentUser(defaultUser);
-              setLocalStorageItemsHelper({ accessToken: '', refreshToken: '' });
+              removeLocalStorageItemsHelper(['accessToken', 'refreshToken']);
             }}
           >
             Logout

@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { request } from '../api/api';
+import { API_REQUESTS, request } from '../api/api';
 import { getLocalStorageItemsHelper } from '../helpers/local-storage.helper';
 
 export const UserContext = createContext({
@@ -26,15 +26,11 @@ export const UserProvider = ({ children }) => {
           return;
         }
 
-        const data = await request(
-          'http://pc-api-env.eba-ff8mdmg7.us-east-1.elasticbeanstalk.com/api/auth/',
-          'GET',
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken} ${refreshToken}`,
-            },
-          }
-        );
+        const data = await request(API_REQUESTS.auth, 'GET', {
+          headers: {
+            Authorization: `Bearer ${accessToken} ${refreshToken}`,
+          },
+        });
 
         if (data?.message) {
           throw new Error(data.message);
@@ -51,7 +47,7 @@ export const UserProvider = ({ children }) => {
     };
 
     getUserAuth();
-  }, [currentUser]);
+  }, []);
 
   const value = { currentUser, setCurrentUser };
 

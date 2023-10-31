@@ -17,3 +17,9 @@ export const getLocalStorageItemsHelper = () => {
 
   return items;
 };
+
+export const removeLocalStorageItemsHelper = (keys) => {
+  keys.forEach((key) => {
+    localStorage.removeItem(key);
+  });
+};
