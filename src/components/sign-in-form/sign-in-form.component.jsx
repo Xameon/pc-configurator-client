@@ -1,39 +1,40 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 
 import { API_REQUESTS, request } from '../../api/api';
+
+import { UserContext } from '../../contexts/user.context';
 
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 
 import './sign-in-form.styles.scss';
+import { setLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
 
 const defaultFormFields = { email: '', password: '' };
 
 const SignInForm = () => {
-  const [googleUser, setGoogleUser] = useState(null);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const { setCurrentUser } = useContext(UserContext);
 
-  useEffect(() => {
-    if (googleUser) {
-      const { access_token } = googleUser;
-
-      const passGoogleUser = async () => {
+  const loginWithGoogle = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      if (codeResponse) {
+        const { access_token } = codeResponse;
         const data = await request(API_REQUESTS.googleAuth, 'GET', {
           headers: {
             authorization: access_token,
           },
         });
-        console.log(data);
-      };
 
-      passGoogleUser();
-    }
-  }, [googleUser]);
-
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: (codeResponse) => setGoogleUser(codeResponse),
+        setLocalStorageItemsHelper({
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+        });
+        setCurrentUser(data.user);
+      }
+    },
     onError: (error) => console.log('Login Failed:', error),
   });
 
@@ -49,7 +50,11 @@ const SignInForm = () => {
       body: { email, password },
     });
 
-    console.log(data);
+    setLocalStorageItemsHelper({
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    });
+    setCurrentUser(data.user);
   };
 
   return (
@@ -72,9 +77,7 @@ const SignInForm = () => {
           onChange={(e) => handleChange(e)}
         />
         <div className='buttons-container'>
-          <Button buttonStyle={'sign-in'} type='submit'>
-            Sign In
-          </Button>
+          <Button type='submit'>Sign In</Button>
           <Button
             buttonStyle={'google-sign-in'}
             type='button'
