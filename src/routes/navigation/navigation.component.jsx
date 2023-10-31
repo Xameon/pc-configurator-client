@@ -1,7 +1,7 @@
 import { useContext, Fragment } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { UserContext, defaultUser } from '../../contexts/user.context';
+import { UserContext } from '../../contexts/user.context';
 import { removeLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
 
 const Navigation = () => {
@@ -9,7 +9,7 @@ const Navigation = () => {
 
   return (
     <Fragment>
-      {currentUser.user ? (
+      {currentUser ? (
         <div
           style={{
             display: 'flex',
@@ -20,7 +20,7 @@ const Navigation = () => {
           <span style={{ color: 'green', fontWeight: 600 }}>Authorized</span>
           <button
             onClick={() => {
-              setCurrentUser(defaultUser);
+              setCurrentUser(null);
               removeLocalStorageItemsHelper(['accessToken', 'refreshToken']);
             }}
           >

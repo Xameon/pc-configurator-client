@@ -12,21 +12,22 @@ export const request = async (url, method, args) => {
 
   const { headers, body } = args;
 
-  try {
-    const response = await fetch(url, {
-      method,
-      headers: {
-        'content-type': 'application/json',
-        authorization: `Bearer ${localStorage.getItem(
-          'accessToken'
-        )} ${localStorage.getItem('refreshToken')}`,
-        ...headers,
-      },
-      body: JSON.stringify(body),
-    });
+  const response = await fetch(url, {
+    method,
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${localStorage.getItem(
+        'accessToken'
+      )} ${localStorage.getItem('refreshToken')}`,
+      ...headers,
+    },
+    body: JSON.stringify(body),
+  });
 
-    return response.json();
-  } catch (error) {
-    console.log(error);
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data.message);
   }
+
+  return response.json();
 };

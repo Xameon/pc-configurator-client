@@ -7,14 +7,8 @@ export const UserContext = createContext({
   setCurrentUser: () => null,
 });
 
-export const defaultUser = {
-  accessToken: null,
-  refreshToken: null,
-  user: null,
-};
-
 export const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(defaultUser);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     const getUserAuth = async () => {
@@ -22,7 +16,7 @@ export const UserProvider = ({ children }) => {
         const { accessToken, refreshToken } = getLocalStorageItemsHelper();
 
         if (!accessToken && !refreshToken) {
-          setCurrentUser(defaultUser);
+          setCurrentUser(null);
           return;
         }
 
@@ -32,17 +26,11 @@ export const UserProvider = ({ children }) => {
           },
         });
 
-        if (data?.message) {
-          throw new Error(data.message);
-        }
-
-        setCurrentUser({ ...currentUser, user: data });
+        setCurrentUser(data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
 
-        if (error.message === 'Invalid Jwt Error') {
-          setCurrentUser(defaultUser);
-        }
+        setCurrentUser(null);
       }
     };
 

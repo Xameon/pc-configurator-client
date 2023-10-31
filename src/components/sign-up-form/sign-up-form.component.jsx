@@ -34,15 +34,22 @@ const SignUpForm = () => {
       return;
     }
 
-    const data = await request(API_REQUESTS.register, 'POST', {
-      body: { name, email, password },
-    });
+    try {
+      const data = await request(API_REQUESTS.register, 'POST', {
+        body: { name, email, password },
+      });
 
-    setLocalStorageItemsHelper({
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
-    });
-    setCurrentUser(data.user);
+      const { accessToken, refreshToken, user } = data;
+
+      setLocalStorageItemsHelper({
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      });
+
+      setCurrentUser(user);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

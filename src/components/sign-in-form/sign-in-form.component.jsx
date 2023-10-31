@@ -22,17 +22,20 @@ const SignInForm = () => {
     onSuccess: async (codeResponse) => {
       if (codeResponse) {
         const { access_token } = codeResponse;
-        const data = await request(API_REQUESTS.googleAuth, 'GET', {
-          headers: {
-            authorization: access_token,
-          },
-        });
+        try {
+          const data = await request(API_REQUESTS.googleAuth, 'GET', {
+            headers: {
+              authorization: access_token,
+            },
+          });
 
-        setLocalStorageItemsHelper({
-          accessToken: data.accessToken,
-          refreshToken: data.refreshToken,
-        });
-        setCurrentUser(data.user);
+          const { accessToken, refreshToken, user } = data;
+
+          setLocalStorageItemsHelper({ accessToken, refreshToken });
+          setCurrentUser(user);
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
     onError: (error) => console.log('Login Failed:', error),
@@ -45,16 +48,18 @@ const SignInForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    try {
+      const data = await request(API_REQUESTS.login, 'POST', {
+        body: { email, password },
+      });
 
-    const data = await request(API_REQUESTS.login, 'POST', {
-      body: { email, password },
-    });
+      const { accessToken, refreshToken, user } = data;
 
-    setLocalStorageItemsHelper({
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
-    });
-    setCurrentUser(data.user);
+      setLocalStorageItemsHelper({ accessToken, refreshToken });
+      setCurrentUser(user);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
