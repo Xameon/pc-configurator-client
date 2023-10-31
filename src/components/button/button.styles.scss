@@ -3,19 +3,16 @@
   padding: 10px;
   border: none;
   transition: 0.1s linear;
+  width: 49%;
+  background-color: lightgrey;
+  color: black;
 
-  &.sign-in {
-    width: 49%;
-    background-color: lightgrey;
-    color: black;
+  border-radius: 5px;
+  font-weight: 600;
 
-    border-radius: 5px;
-    font-weight: 600;
-
-    &:hover {
-      background-color: black;
-      color: white;
-    }
+  &:hover {
+    background-color: black;
+    color: white;
   }
 
   &.google-sign-in {
@@ -30,18 +27,6 @@
       background-color: blue;
     }
   }
-
-  &.sign-up {
-    width: 49%;
-    background-color: lightgrey;
-    color: black;
-
-    border-radius: 5px;
-    font-weight: 600;
-
-    &:hover {
-      background-color: black;
-      color: white;
-    }
-  }
 }
+
+

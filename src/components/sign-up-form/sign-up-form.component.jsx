@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { API_REQUESTS, request } from '../../api/api';
+import { setLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
+
+import { UserContext } from '../../contexts/user.context';
 
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
@@ -16,6 +19,7 @@ const defaultFormFields = {
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { name, email, password, confirmPassword } = formFields;
+  const { setCurrentUser } = useContext(UserContext);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -34,7 +38,11 @@ const SignUpForm = () => {
       body: { name, email, password },
     });
 
-    console.log(data);
+    setLocalStorageItemsHelper({
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    });
+    setCurrentUser(data.user);
   };
 
   return (
@@ -74,9 +82,7 @@ const SignUpForm = () => {
           onChange={(e) => handleChange(e)}
         />
         <div className='buttons-container'>
-          <Button buttonStyle={'sign-up'} type='submit'>
-            Sign Up
-          </Button>
+          <Button type='submit'>Sign Up</Button>
         </div>
       </form>
     </div>
