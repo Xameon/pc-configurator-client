@@ -1,0 +1,29 @@
+.card {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 0px 0px 16px 4px #e2e2e2;
+  font-size: 18px;
+
+  .header {
+    position: absolute;
+    top: -48px;
+    left: 0px;
+    color: white;
+    background-color: #748ffc;
+    font-weight: 600;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .body {
+    color: #1f2937;
+    padding: 16px;
+  }
+}

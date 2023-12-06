@@ -1,13 +1,16 @@
 :root {
-  --main-bg-color: white;
+  --main-bg-color: #f3f4f6;
   --main-font: 'Quicksand', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
 }
 
 body {
   background-color: var(--main-bg-color);
-  margin: 0;
+  margin: 10px;
   font-family: var(--main-font);
 }
 

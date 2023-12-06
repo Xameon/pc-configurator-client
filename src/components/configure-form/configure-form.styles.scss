@@ -1,0 +1,45 @@
+.configure-form-container {
+  display: flex;
+  flex-direction: column;
+  margin: 24px 16px;
+
+  .intelligence-container {
+    display: none;
+
+    &.active {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      animation: active 0.9s ease-in;
+    }
+
+    .intelligence-header {
+      font-size: 44px;
+      font-weight: 600;
+    }
+
+    .intelligence-description {
+      font-size: 24px;
+      animation: active 0.9s ease-in;
+      height: 250px;
+    }
+
+    .intelligence-value {
+      display: block;
+      margin: 2px;
+      font-weight: 600;
+    }
+
+    .intelligence-range {
+    }
+
+    @keyframes active {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+}
