@@ -1,0 +1,14 @@
+.config-name-input {
+  width: 50%;
+  align-self: center;
+
+  input {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+    width: 100%;
+    font-size: 48px;
+    font-weight: 600;
+    padding: 0 2px;
+  }
+}

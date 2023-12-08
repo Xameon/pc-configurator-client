@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/user.context';
 import { removeLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
 
-import { ReactComponent as Logo } from '../../assets/logo.svg';
+import { ReactComponent as Logo } from '../../assets/icons/logo.svg';
 import Button from '../../components/button/button.component';
 
 import './navigation.styles.scss';

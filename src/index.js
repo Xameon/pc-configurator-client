@@ -1,11 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import { BrowserRouter } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import './index.scss';
 import { UserProvider } from './contexts/user.context';
+import { ConfigFieldsProvider } from './contexts/config-fields.context';
+
+import reportWebVitals from './reportWebVitals';
+
+import './index.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,7 +18,9 @@ root.render(
     <React.StrictMode>
       <BrowserRouter>
         <UserProvider>
-          <App />
+          <ConfigFieldsProvider>
+            <App />
+          </ConfigFieldsProvider>
         </UserProvider>
       </BrowserRouter>
     </React.StrictMode>
