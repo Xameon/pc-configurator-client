@@ -1,30 +1,28 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useContext } from 'react';
+
 import Button from '../button/button.component';
+import { ConfigFieldsContext } from '../../contexts/config-fields.context';
 
 import { configureIntelligence } from '../../assets/configure-intelligence';
 
 import './stepper.styles.scss';
+import { useNavigate } from 'react-router-dom';
 
 const Stepper = ({ stagesCount }) => {
   const stagesMaxIndex = stagesCount - 1;
-
   const startStage = {
     currentStage: 0,
     progress: 0,
     steps: ['active'].concat(Array(stagesMaxIndex).fill('')),
   };
 
-  const defaultFormFields = {
-    budget: 1,
-    perfomance: 1,
-    memory: 1,
-  };
-
   const [stage, setStage] = useState(startStage);
-  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { configFields, setConfigFields } = useContext(ConfigFieldsContext);
 
   const { currentStage, progress, steps } = stage;
   const lastStage = currentStage === stagesMaxIndex;
+
+  const navigate = useNavigate();
 
   const handleNextStep = () => {
     if (lastStage) {
@@ -66,7 +64,9 @@ const Stepper = ({ stagesCount }) => {
   };
 
   const handleSubmit = (event) => {
-    console.log('submit');
+    event.preventDefault();
+
+    navigate('/new');
   };
 
   return (
@@ -101,16 +101,19 @@ const Stepper = ({ stagesCount }) => {
                 type='range'
                 min={min}
                 max={max}
-                value={formFields[property]}
+                value={configFields[property]}
                 onChange={(e) =>
-                  setFormFields({ ...formFields, [property]: e.target.value })
+                  setConfigFields({
+                    ...configFields,
+                    [property]: e.target.value,
+                  })
                 }
               />
               <p className='intelligence-description'>
-                {description[formFields[property] - 1] || (
+                {description[configFields[property] - 1] || (
                   <Fragment>
                     <span className='intelligence-value'>
-                      {formFields[property]}
+                      {configFields[property]}
                     </span>
                     {description[0]}
                   </Fragment>
@@ -120,7 +123,7 @@ const Stepper = ({ stagesCount }) => {
           )
         )}
 
-        <div className='buttons'>
+        <div className='buttons-container'>
           <Button
             buttonStyle='secondary'
             type='button'

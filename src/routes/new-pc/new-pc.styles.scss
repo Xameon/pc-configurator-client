@@ -1,0 +1,15 @@
+.new-pc-container {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  max-width: 1200px;
+  margin: 32px auto;
+
+  .buttons-container {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: space-around;
+    gap: 48px;
+  }
+}
