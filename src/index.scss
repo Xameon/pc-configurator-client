@@ -10,8 +10,20 @@
 
 body {
   background-color: var(--main-bg-color);
-  margin: 10px;
   font-family: var(--main-font);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eff2ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ced8fe;
+  border-radius: 3px;
 }
 
 input {

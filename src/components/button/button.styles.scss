@@ -7,9 +7,13 @@
   background-color: lightgrey;
   color: black;
   background: none;
+  border: 1px solid black;
   border-radius: 5px;
   font-weight: 600;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &:hover {
     background-color: black;
@@ -34,6 +38,7 @@
     align-items: center;
     background-color: transparent;
     cursor: pointer;
+    border: none;
 
     &:hover .logo {
       stroke: black;
@@ -43,6 +48,7 @@
   }
 
   &.sign-in {
+    border: none;
     background-color: #4c6ef5;
     color: white;
     transition: 0.1s;
@@ -56,6 +62,7 @@
   }
 
   &.sign-up {
+    border: none;
     background-color: #edf2ff;
     color: black;
     transition: 0.1s;
@@ -69,6 +76,7 @@
   }
 
   &.primary {
+    border: none;
     background-color: #4057af;
     color: white;
 
@@ -78,11 +86,38 @@
   }
 
   &.secondary {
+    border: none;
     background-color: #becbfd;
 
     &:hover {
       color: black;
       background-color: #ced8fe;
+    }
+  }
+
+  &.delete {
+    border: 0;
+    box-shadow: inset 0 0 0 2px darkred;
+    color: darkred;
+
+    &:hover {
+      background-color: #ff3030;
+      box-shadow: inset 0 0 0 2px #ff3030;
+      color: white;
+    }
+  }
+
+  &.toggle-configs-bar {
+    width: 5px;
+    height: 50px;
+    font-size: 52px;
+    border: none;
+    margin-left: 4px;
+    background-color: transparent;
+    color: #4057af;
+
+    &:hover {
+      color: #090c19;
     }
   }
 }
