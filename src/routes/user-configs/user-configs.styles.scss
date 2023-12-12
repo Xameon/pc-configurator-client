@@ -1,0 +1,69 @@
+.user-page-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  justify-items: start;
+  height: calc(100vh - 96px);
+
+  .configs-bar {
+    display: flex;
+    align-items: center;
+
+    .configs {
+      transition: all 0.4s;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 16px;
+      width: 280px;
+      height: calc(100vh - 96px);
+      overflow-y: scroll;
+      padding: 4px;
+      background-color: #dee5fe;
+
+      &::-webkit-scrollbar-track {
+        background: #dee5fe;
+      }
+
+      &.closed {
+        visibility: hidden;
+        width: 0px;
+      }
+    }
+
+    .config-name {
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      border-radius: 9px;
+      background-color: #eff2ff;
+      box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.05);
+      width: 250px;
+
+      &:hover {
+        transform: scale(1.01);
+      }
+    }
+  }
+
+  .user-container {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+
+    .current-config {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+
+      .buttons {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 12px;
+      }
+    }
+  }
+}

@@ -28,7 +28,7 @@ const Navigation = () => {
         </div>
         <div className='menu-container'>
           {currentUser ? (
-            <Button onClick={logout}>Logout</Button>
+            <Button onClick={logout}>{currentUser.name}</Button>
           ) : (
             <Fragment>
               <Button buttonStyle={'sign-in'} onClick={() => navigate('/auth')}>
