@@ -20,6 +20,13 @@
     color: white;
   }
 
+  &.go {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+
   &.google-sign-in {
     background-color: dodgerblue;
     color: white;
@@ -118,6 +125,41 @@
 
     &:hover {
       color: #090c19;
+    }
+  }
+
+  &.user-option {
+    border: none;
+    border-radius: 9px;
+    justify-content: flex-start;
+    gap: 8px;
+    font-size: 18px;
+    fill: #2e3e7d;
+    stroke: #2e3e7d;
+    color: #2e3e7d;
+
+    &:hover,
+    &:active {
+      background-color: #dee5fe;
+    }
+  }
+
+  &.logout {
+    border: none;
+    border-radius: 9px;
+    gap: 8px;
+    font-size: 18px;
+    box-shadow: inset 0 0 0 2px #4057af;
+    fill: #4057af;
+    stroke: #4057af;
+    color: #4057af;
+
+    &:hover,
+    &:active {
+      background-color: #4057af;
+      fill: #dee5fe;
+      stroke: #dee5fe;
+      color: #dee5fe;
     }
   }
 }

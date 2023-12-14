@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../components/button/button.component';
 import Card from '../../components/card/card.component';
 
+import { ReactComponent as RocketIcon } from '../../assets/icons/rocket.svg';
+
 import './home.styles.scss';
 
 const Home = () => {
@@ -19,6 +21,10 @@ const Home = () => {
     },
     {
       header: 'Step 3',
+      body: 'Indicate how much memory you need',
+    },
+    {
+      header: 'Step 4',
       body: 'Get the configuration of the computer you were looking for!',
     },
   ];
@@ -26,10 +32,11 @@ const Home = () => {
   return (
     <div>
       <div className='home-page-container'>
-        <h1>Your computer configurator</h1>
+        <h1>Heap Configurator PC</h1>
         <div className='buttons-container'>
-          <Button buttonStyle='home-page' onClick={() => navigate('/create')}>
-            Create PC
+          <Button buttonStyle='go' onClick={() => navigate('/create')}>
+            <p>Create Config</p>
+            <RocketIcon className='icon' />
           </Button>
         </div>
         <div className='cards-container'>

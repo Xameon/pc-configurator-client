@@ -15,7 +15,7 @@ const App = () => {
         <Route path='auth' element={<Authentication />} />
         <Route path='create' element={<CreatePc />} />
         <Route path='new' element={<NewPc />} />
-        <Route path='user' element={<UserConfigs />} />
+        <Route path='user-configs' element={<UserConfigs />} />
       </Route>
     </Routes>
   );

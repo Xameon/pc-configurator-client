@@ -2,21 +2,16 @@ import { useContext, Fragment } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import { UserContext } from '../../contexts/user.context';
-import { removeLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
 
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg';
 import Button from '../../components/button/button.component';
+import UserMiniprofile from '../../user-miniprofile/user-miniprofile.component';
 
 import './navigation.styles.scss';
 
 const Navigation = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   const navigate = useNavigate();
-
-  const logout = () => {
-    setCurrentUser(null);
-    removeLocalStorageItemsHelper(['accessToken', 'refreshToken']);
-  };
 
   return (
     <Fragment>
@@ -28,7 +23,7 @@ const Navigation = () => {
         </div>
         <div className='menu-container'>
           {currentUser ? (
-            <Button onClick={logout}>{currentUser.name}</Button>
+            <UserMiniprofile />
           ) : (
             <Fragment>
               <Button buttonStyle={'sign-in'} onClick={() => navigate('/auth')}>

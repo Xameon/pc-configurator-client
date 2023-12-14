@@ -5,6 +5,8 @@ import Button from '../../components/button/button.component';
 import PcConfiguration from '../../components/pc-configuration/pc-configuration.component';
 import ConfigNameInput from '../../components/config-name-input/config-name-input.component';
 
+import { arrowLeft, arrowRight } from '../../assets/special-char.js';
+
 import './user-configs.styles.scss';
 
 const configs = [
@@ -230,11 +232,6 @@ const UserConfigs = () => {
   const { currentUser } = useContext(UserContext);
   const [configsBarOpened, setConfigsBarOpened] = useState(true);
   const [currentConfig, setCurrentConfig] = useState(null);
-
-  const [arrowLeft, arrowRight] = [
-    String.fromCharCode(8249),
-    String.fromCharCode(8250),
-  ];
 
   const toggleConfigsBar = () => {
     setConfigsBarOpened(!configsBarOpened);
