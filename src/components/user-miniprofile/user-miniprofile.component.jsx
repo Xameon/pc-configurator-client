@@ -1,16 +1,18 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UserContext } from '../contexts/user.context';
+import { UserContext } from '../../contexts/user.context';
 
-import Button from '../components/button/button.component';
+import { t } from 'i18next';
 
-import { ReactComponent as ArrowDown } from '../assets/icons/chevron-down-outline.svg';
-import { ReactComponent as ListIcon } from '../assets/icons/list.svg';
-import { ReactComponent as SettingsIcon } from '../assets/icons/settings.svg';
-import { ReactComponent as LogoutIcon } from '../assets/icons/logout.svg';
+import Button from '../button/button.component';
 
-import { removeLocalStorageItemsHelper } from '../helpers/local-storage.helper';
+import { ReactComponent as ArrowDown } from '../../assets/icons/chevron-down-outline.svg';
+import { ReactComponent as ListIcon } from '../../assets/icons/list.svg';
+import { ReactComponent as SettingsIcon } from '../../assets/icons/settings.svg';
+import { ReactComponent as LogoutIcon } from '../../assets/icons/logout.svg';
+
+import { removeLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
 
 import './user-minifpofile.styles.scss';
 
@@ -30,6 +32,8 @@ const UserMiniprofile = () => {
     removeLocalStorageItemsHelper(['accessToken', 'refreshToken']);
   };
 
+  const text = t('userMiniProfile', { returnObjects: true });
+
   return (
     <div className='user-miniprofile-container'>
       <div
@@ -47,14 +51,14 @@ const UserMiniprofile = () => {
           onClick={() => navigate('/user-configs')}
         >
           <ListIcon className='option-icon' />
-          <span>Configurations</span>
+          <span>{text.configurations}</span>
         </Button>
         <Button buttonStyle='user-option'>
           <SettingsIcon className='option-icon' />
-          <span>Settings</span>
+          <span>{text.settings}</span>
         </Button>
         <Button buttonStyle='logout' onClick={logout}>
-          <span>Logout</span>
+          <span>{text.logout}</span>
           <LogoutIcon className='option-icon' />
         </Button>
       </div>

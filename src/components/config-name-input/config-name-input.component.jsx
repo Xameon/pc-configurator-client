@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 import './config-name-input.styles.scss';
+import { ConfigFieldsContext } from '../../contexts/config-fields.context';
 
-const ConfigNameInput = ({ initialValue }) => {
-  const [configName, setConfigName] = useState(initialValue);
-
-  useEffect(() => setConfigName(initialValue), [initialValue]);
+const ConfigNameInput = () => {
+  const { config, setConfig } = useContext(ConfigFieldsContext);
 
   return (
     <div className='config-name-input'>
       <input
         type='text'
-        value={configName}
-        onChange={(e) => setConfigName(e.target.value)}
+        required
+        value={config.name}
+        onChange={(e) => setConfig({ ...config, name: e.target.value })}
       />
     </div>
   );

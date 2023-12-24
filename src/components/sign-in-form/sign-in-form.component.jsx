@@ -1,15 +1,18 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import { useState, useContext } from 'react';
 
-import { API_REQUESTS, request } from '../../api/api';
+import { useTranslation } from 'react-i18next';
 
 import { UserContext } from '../../contexts/user.context';
 
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
 
-import './sign-in-form.styles.scss';
+import { API_REQUESTS, request } from '../../api/api';
+
 import { setLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
+
+import './sign-in-form.styles.scss';
 
 const defaultFormFields = { email: '', password: '' };
 
@@ -17,6 +20,9 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
   const { setCurrentUser } = useContext(UserContext);
+
+  const { t } = useTranslation();
+  const text = t('signIn', { returnObjects: true });
 
   const loginWithGoogle = useGoogleLogin({
     onSuccess: async (codeResponse) => {
@@ -48,6 +54,7 @@ const SignInForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       const data = await request(API_REQUESTS.login, 'POST', {
         body: { email, password },
@@ -64,8 +71,8 @@ const SignInForm = () => {
 
   return (
     <div className='sign-in-container'>
-      <h2>Already have an account?</h2>
-      <h3>Sign in with your email and password</h3>
+      <h2>{text.header}</h2>
+      <h3>{text.subheader}</h3>
       <form onSubmit={(event) => handleSubmit(event)}>
         <FormInput
           label='Email'
@@ -82,13 +89,13 @@ const SignInForm = () => {
           onChange={(e) => handleChange(e)}
         />
         <div className='buttons-container'>
-          <Button type='submit'>Sign In</Button>
+          <Button type='submit'>{text.signIn}</Button>
           <Button
             buttonStyle={'google-sign-in'}
             type='button'
             onClick={() => loginWithGoogle()}
           >
-            Sign In With Google
+            {text.signInGoogle}
           </Button>
         </div>
       </form>

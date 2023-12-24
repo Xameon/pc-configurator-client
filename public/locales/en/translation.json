@@ -1,0 +1,73 @@
+{
+  "homeHeader": "Configurator PC",
+  "homeCreateConfig": "Create Config",
+  "homeCards": [
+    {
+      "header": "Step 1",
+      "body": "Indicate for what purposes you need a computer."
+    },
+    {
+      "header": "Step 2",
+      "body": "Indicate the amount of money you are willing to pay for your computer."
+    },
+    {
+      "header": "Step 3",
+      "body": "Indicate how much memory you need"
+    },
+    {
+      "header": "Step 4",
+      "body": "Get the configuration of the computer you were looking for!"
+    }
+  ],
+  "userMiniProfile": {
+    "configurations": "Configurations",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "configureIntelligence": {
+    "perfomance": {
+      "header": "Specify computer perfomance",
+      "description": [
+        "A simple computer for watching videos, listening to music and surfing the browser.",
+        "A computer for undemanding or online games and simple tasks.",
+        "A computer on which you can run “AAA” projects, set higher settings in games, and work with demanding editors.",
+        "A computer for high settings in games and for working with powerful software tools."
+      ]
+    },
+    "budget": {
+      "header": "Estimate your budget",
+      "description": [
+        "Keep in mind that the scope within which the assembly is generated will depend on the budget (with a small budget you will not be able to get the most powerful computer)."
+      ]
+    },
+    "memory": {
+      "header": "Amount of disk memory",
+      "description": [
+        "128 GB - The minimum amount of memory that may be needed in a modern computer.",
+        "256 GB - You can store photos or videos, install a couple of modern games.",
+        "512 GB - The average amount of memory in a modern computer allows you to store various files and install several modern games.",
+        "1 TB - A terabyte is enough to save a lot of heavy files, high-resolution videos and at the same time install a dozen or even more modern games.",
+        "2 TB - Rarely does anyone need such a large storage facility. But if you need to store a lot of graphic files or want to install most modern games, then this choice is for you.",
+        "4 TB - Do you need to save every moment of your life to pass on your video story to posterity, or have you decided to download all the AAA projects that currently exist? Well, the choice is yours."
+      ]
+    }
+  },
+  "signIn": {
+    "header": "Already have an account?",
+    "subheader": "Sign in with your email and password",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "signInGoogle": "Sign In with Google"
+    
+  },
+  "signUp": {
+    "header": "Don't have an account?",
+    "subheader": "Sign up with your email and password",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signUp": "Sign Up"
+  }
+}

@@ -5,7 +5,8 @@ import { UserContext } from '../../contexts/user.context';
 
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg';
 import Button from '../../components/button/button.component';
-import UserMiniprofile from '../../user-miniprofile/user-miniprofile.component';
+import UserMiniprofile from '../../components/user-miniprofile/user-miniprofile.component';
+import LangChanger from '../../components/language-changer/lang-changer.component';
 
 import './navigation.styles.scss';
 
@@ -22,6 +23,7 @@ const Navigation = () => {
           </Button>
         </div>
         <div className='menu-container'>
+          <LangChanger />
           {currentUser ? (
             <UserMiniprofile />
           ) : (

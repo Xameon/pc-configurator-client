@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { API_REQUESTS, request } from '../../api/api';
 import { setLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
+import { useTranslation } from 'react-i18next';
 
 import { UserContext } from '../../contexts/user.context';
 
@@ -20,6 +21,9 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { name, email, password, confirmPassword } = formFields;
   const { setCurrentUser } = useContext(UserContext);
+
+  const { t } = useTranslation();
+  const text = t('signUp', { returnObjects: true });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -54,8 +58,8 @@ const SignUpForm = () => {
 
   return (
     <div className='sign-up-container'>
-      <h2>Don't have an account?</h2>
-      <h3>Sign up with your email and password</h3>
+      <h2>{text.header}</h2>
+      <h3>{text.subheader}</h3>
       <form onSubmit={(e) => handleSubmit(e)}>
         <FormInput
           label='Name'
@@ -89,7 +93,7 @@ const SignUpForm = () => {
           onChange={(e) => handleChange(e)}
         />
         <div className='buttons-container'>
-          <Button type='submit'>Sign Up</Button>
+          <Button type='submit'>{text.signUp}</Button>
         </div>
       </form>
     </div>

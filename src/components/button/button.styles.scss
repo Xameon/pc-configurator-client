@@ -162,4 +162,16 @@
       color: #dee5fe;
     }
   }
+
+  &.language {
+    justify-content: flex-start;
+    border: none;
+    color: #121932;
+    padding: 4px 8px;
+
+    &:hover,
+    &:active {
+      background-color: #dee5fe;
+    }
+  }
 }

@@ -1,29 +1,55 @@
+import { Fragment, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { ConfigFieldsContext } from '../../contexts/config-fields.context';
+import { UserContext } from '../../contexts/user.context';
+
 import PcConfiguration from '../../components/pc-configuration/pc-configuration.component';
 import Button from '../../components/button/button.component';
-
-import './new-pc.styles.scss';
 import ConfigNameInput from '../../components/config-name-input/config-name-input.component';
 
+import './new-pc.styles.scss';
+import { API_REQUESTS, request } from '../../api/api';
+
 const NewPc = () => {
-  const pcConfig = {
-    cpu: 'Ryzen 5 5600G',
-    chipset: 'B450',
-    gpu: 'NVIDIA RTX 3060',
-    rom: '1 TB',
-    ram: '16 GB',
-    power: '500W',
+  const { currentUser } = useContext(UserContext);
+  const { config } = useContext(ConfigFieldsContext);
+
+  const navigate = useNavigate();
+
+  const saveConfigHandler = () => {
+    if (currentUser) {
+      request(API_REQUESTS.userConfigs, 'POST', {
+        header: {},
+        body: {
+          name: config.name,
+          configurationId: config.id,
+        },
+      });
+      // ...
+    } else {
+      navigate('/auth');
+    }
   };
 
   return (
     <div className='new-pc-container'>
-      <ConfigNameInput />
-
-      <PcConfiguration config={pcConfig} />
-
-      <div className='buttons-container'>
-        <Button buttonStyle='secondary'>Create new</Button>
-        <Button buttonStyle='primary'>Save config</Button>
-      </div>
+      {config ? (
+        <Fragment>
+          <ConfigNameInput initialValue={config.name} />
+          <PcConfiguration config={config} />
+          <div className='buttons-container'>
+            <Button buttonStyle='secondary' onClick={() => navigate('/create')}>
+              Create new
+            </Button>
+            <Button buttonStyle='primary' onClick={saveConfigHandler}>
+              Save config
+            </Button>
+          </div>
+        </Fragment>
+      ) : (
+        <div>Oops, something went wrong.</div>
+      )}
     </div>
   );
 };

@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
 
         const data = await request(API_REQUESTS.auth, 'GET', {
           headers: {
-            Authorization: `Bearer ${accessToken} ${refreshToken}`,
+            authorization: `Bearer ${accessToken} ${refreshToken}`,
           },
         });
 

@@ -1,0 +1,55 @@
+.lang-changer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  .lang-icon {
+    cursor: pointer;
+    width: 24px;
+    border-radius: 9px;
+    fill: #090c19;
+    stroke: #090c19;
+    color: #090c19;
+    transition: 0.2s linear;
+
+    &:hover,
+    &:active,
+    &.active {
+      fill: #2e3e7d;
+      stroke: #2e3e7d;
+      color: #2e3e7d;
+    }
+  }
+
+  .languages-list {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 8px;
+    border-radius: 9px;
+    z-index: 2;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.05);
+    list-style: none;
+    top: 150%;
+    width: 200px;
+    max-height: 250px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    opacity: 0;
+    visibility: hidden;
+    user-select: none;
+    transition: visibility 0s linear 0.2s, opacity 0.2s;
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      transition: visibility 0s linear, opacity 0.2s;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
