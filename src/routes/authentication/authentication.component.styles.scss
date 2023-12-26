@@ -1,8 +1,8 @@
 .authentication-container {
   display: flex;
   justify-content: space-around;
-  margin: 200px;
   transition: 0.1s linear;
+  position: relative;
 }
 
 @media screen and (max-width: 720px) {

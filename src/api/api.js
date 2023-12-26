@@ -1,10 +1,12 @@
-const API_URL = 'https://pc-api.fly.dev/api';
+const API_URL = 'https://comp-api.fly.dev/api';
 
 export const API_REQUESTS = {
   googleAuth: `${API_URL}/auth/google`,
   register: `${API_URL}/auth/register`,
   login: `${API_URL}/auth/login`,
   auth: `${API_URL}/auth`,
+  configurator: `${API_URL}/configurator`,
+  userConfigs: `${API_URL}/user-configuration`,
 };
 
 export const request = async (url, method, args) => {
@@ -12,7 +14,7 @@ export const request = async (url, method, args) => {
 
   const { headers, body } = args;
 
-  const response = await fetch(url, {
+  const requestInfo = {
     method,
     headers: {
       'content-type': 'application/json',
@@ -22,7 +24,9 @@ export const request = async (url, method, args) => {
       ...headers,
     },
     body: JSON.stringify(body),
-  });
+  };
+
+  const response = await fetch(url, requestInfo);
 
   if (!response.ok) {
     const data = await response.json();

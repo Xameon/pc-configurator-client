@@ -1,14 +1,16 @@
 import { useState, Fragment, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-import Button from '../button/button.component';
 import { ConfigFieldsContext } from '../../contexts/config-fields.context';
 
-import { configureIntelligence } from '../../assets/configure-intelligence';
+import Button from '../button/button.component';
+
+import { API_REQUESTS, request } from '../../api/api.js';
 
 import './stepper.styles.scss';
-import { useNavigate } from 'react-router-dom';
 
-const Stepper = ({ stagesCount }) => {
+const Stepper = ({ stagesCount, setLoaderActive }) => {
   const stagesMaxIndex = stagesCount - 1;
   const startStage = {
     currentStage: 0,
@@ -17,10 +19,35 @@ const Stepper = ({ stagesCount }) => {
   };
 
   const [stage, setStage] = useState(startStage);
-  const { configFields, setConfigFields } = useContext(ConfigFieldsContext);
+  const { configFields, setConfigFields, setConfigHandler } =
+    useContext(ConfigFieldsContext);
 
   const { currentStage, progress, steps } = stage;
   const lastStage = currentStage === stagesMaxIndex;
+
+  const { t } = useTranslation();
+  const text = t('configureIntelligence', { returnObjects: true });
+
+  const configureIntelligence = {
+    perfomance: {
+      header: text.perfomance.header,
+      min: 1,
+      max: 4,
+      description: text.perfomance.description,
+    },
+    budget: {
+      header: text.budget.header,
+      min: 1,
+      max: 500,
+      description: text.budget.description,
+    },
+    memory: {
+      header: text.memory.header,
+      min: 1,
+      max: 6,
+      description: text.memory.description,
+    },
+  };
 
   const navigate = useNavigate();
 
@@ -63,8 +90,22 @@ const Stepper = ({ stagesCount }) => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    setLoaderActive(true);
+
+    const { perfomance, budget, memory } = configFields;
+
+    const newConfig = await request(
+      `${API_REQUESTS.configurator}?performance=${perfomance}&budget=${budget}&memory=${memory}`,
+      'GET',
+      { headers: {} }
+    );
+
+    setConfigHandler(newConfig);
+
+    setLoaderActive(false);
 
     navigate('/new');
   };
@@ -87,8 +128,9 @@ const Stepper = ({ stagesCount }) => {
       </div>
 
       <form className='configure-form-container' onSubmit={handleSubmit}>
-        {configureIntelligence.map(
-          ({ header, min, max, description, property }, idx) => (
+        {Object.keys(configureIntelligence).map((key, idx) => {
+          const { header, min, max, description } = configureIntelligence[key];
+          return (
             <div
               className={`intelligence-container ${
                 currentStage === idx ? 'active' : ''
@@ -101,48 +143,48 @@ const Stepper = ({ stagesCount }) => {
                 type='range'
                 min={min}
                 max={max}
-                value={configFields[property]}
+                value={configFields[key]}
                 onChange={(e) =>
                   setConfigFields({
                     ...configFields,
-                    [property]: e.target.value,
+                    [key]: e.target.value,
                   })
                 }
               />
               <p className='intelligence-description'>
-                {description[configFields[property] - 1] || (
+                {description[configFields[key] - 1] || (
                   <Fragment>
                     <span className='intelligence-value'>
-                      {configFields[property]}
+                      {configFields[key]}
                     </span>
                     {description[0]}
                   </Fragment>
                 )}
               </p>
             </div>
-          )
-        )}
+          );
+        })}
 
         <div className='buttons-container'>
           <Button
-            buttonStyle='secondary'
+            buttonStyle='secondary w50'
             type='button'
             onClick={handlePrevStep}
           >
-            Previous
+            {text.prevBtn}
           </Button>
           {lastStage && (
-            <Button buttonStyle='primary' type='submit'>
-              To configuration
+            <Button buttonStyle='primary w50' type='submit'>
+              {text.toConfigBtn}
             </Button>
           )}
           {!lastStage && (
             <Button
-              buttonStyle='primary'
+              buttonStyle='primary w50'
               type='button'
               onClick={handleNextStep}
             >
-              Next
+              {text.nextBtn}
             </Button>
           )}
         </div>

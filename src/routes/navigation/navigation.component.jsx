@@ -5,13 +5,20 @@ import { UserContext } from '../../contexts/user.context';
 
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg';
 import Button from '../../components/button/button.component';
-import UserMiniprofile from '../../user-miniprofile/user-miniprofile.component';
+import UserMiniprofile from '../../components/user-miniprofile/user-miniprofile.component';
+import LangChanger from '../../components/language-changer/lang-changer.component';
+
+import { useTranslation } from 'react-i18next';
 
 import './navigation.styles.scss';
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
+  const signInBtnText = t('signIn.signIn');
+  const signUpBtnText = t('signUp.signUp');
 
   return (
     <Fragment>
@@ -22,15 +29,19 @@ const Navigation = () => {
           </Button>
         </div>
         <div className='menu-container'>
+          <LangChanger />
           {currentUser ? (
             <UserMiniprofile />
           ) : (
             <Fragment>
-              <Button buttonStyle={'sign-in'} onClick={() => navigate('/auth')}>
-                SignIn
+              <Button buttonStyle={'primary'} onClick={() => navigate('/auth')}>
+                {signInBtnText}
               </Button>
-              <Button buttonStyle={'sign-up'} onClick={() => navigate('/auth')}>
-                SignUp
+              <Button
+                buttonStyle={'secondary'}
+                onClick={() => navigate('/auth')}
+              >
+                {signUpBtnText}
               </Button>
             </Fragment>
           )}
