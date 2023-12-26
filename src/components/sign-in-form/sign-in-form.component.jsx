@@ -52,15 +52,12 @@ const SignInForm = ({ setLoaderActive }) => {
       setLoaderActive(true);
       if (codeResponse) {
         const { access_token } = codeResponse;
-        console.log({ codeResponse });
         try {
           const data = await request(API_REQUESTS.googleAuth, 'GET', {
             headers: {
               authorization: access_token,
             },
           });
-
-          console.log(data);
 
           const { accessToken, refreshToken, user } = data;
 
@@ -69,7 +66,6 @@ const SignInForm = ({ setLoaderActive }) => {
 
           checkSavedConfig();
         } catch (error) {
-          console.log(error);
           setLoaderActive(false);
         }
       }
