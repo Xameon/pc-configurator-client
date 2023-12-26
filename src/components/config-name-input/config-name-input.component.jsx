@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 
-import './config-name-input.styles.scss';
 import { ConfigFieldsContext } from '../../contexts/config-fields.context';
+
+import './config-name-input.styles.scss';
 
 const ConfigNameInput = () => {
   const { config, setConfig } = useContext(ConfigFieldsContext);

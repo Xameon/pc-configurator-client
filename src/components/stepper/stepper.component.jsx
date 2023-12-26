@@ -167,24 +167,24 @@ const Stepper = ({ stagesCount, setLoaderActive }) => {
 
         <div className='buttons-container'>
           <Button
-            buttonStyle='secondary'
+            buttonStyle='secondary w50'
             type='button'
             onClick={handlePrevStep}
           >
-            Previous
+            {text.prevBtn}
           </Button>
           {lastStage && (
-            <Button buttonStyle='primary' type='submit'>
-              To configuration
+            <Button buttonStyle='primary w50' type='submit'>
+              {text.toConfigBtn}
             </Button>
           )}
           {!lastStage && (
             <Button
-              buttonStyle='primary'
+              buttonStyle='primary w50'
               type='button'
               onClick={handleNextStep}
             >
-              Next
+              {text.nextBtn}
             </Button>
           )}
         </div>

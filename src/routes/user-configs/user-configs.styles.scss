@@ -58,6 +58,13 @@
       flex-direction: column;
       gap: 24px;
 
+      .current-config-name {
+        align-self: center;
+        font-size: 48px;
+        font-weight: 600;
+        padding: 32px;
+      }
+
       .buttons {
         display: flex;
         justify-content: space-around;

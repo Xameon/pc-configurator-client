@@ -9,7 +9,7 @@ import Button from '../button/button.component';
 
 import { ReactComponent as ArrowDown } from '../../assets/icons/chevron-down-outline.svg';
 import { ReactComponent as ListIcon } from '../../assets/icons/list.svg';
-import { ReactComponent as SettingsIcon } from '../../assets/icons/settings.svg';
+// import { ReactComponent as SettingsIcon } from '../../assets/icons/settings.svg';
 import { ReactComponent as LogoutIcon } from '../../assets/icons/logout.svg';
 
 import { removeLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
@@ -29,7 +29,12 @@ const UserMiniprofile = () => {
 
   const logout = () => {
     setCurrentUser(null);
-    removeLocalStorageItemsHelper(['accessToken', 'refreshToken']);
+    removeLocalStorageItemsHelper([
+      'accessToken',
+      'refreshToken',
+      'lastConfig',
+    ]);
+    navigate('/');
   };
 
   const text = t('userMiniProfile', { returnObjects: true });
@@ -53,10 +58,10 @@ const UserMiniprofile = () => {
           <ListIcon className='option-icon' />
           <span>{text.configurations}</span>
         </Button>
-        <Button buttonStyle='user-option'>
+        {/* <Button buttonStyle='user-option'>
           <SettingsIcon className='option-icon' />
           <span>{text.settings}</span>
-        </Button>
+        </Button> */}
         <Button buttonStyle='logout' onClick={logout}>
           <span>{text.logout}</span>
           <LogoutIcon className='option-icon' />

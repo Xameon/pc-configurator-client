@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const defaultConfigFields = {
   budget: 1,
@@ -20,7 +21,8 @@ export const ConfigFieldsProvider = ({ children }) => {
     JSON.parse(localStorage.getItem('lastConfig'))
   );
 
-  console.log(config.name);
+  const { t } = useTranslation();
+  const newConfigName = t('newPc.newConfigLabel');
 
   const setConfigHandler = (config) => {
     try {
@@ -29,8 +31,8 @@ export const ConfigFieldsProvider = ({ children }) => {
       const { id, chipset, cpu, gpu } = configuration;
 
       const readableConfig = {
-        name: 'New Config',
-        cpu: `${cpu.сompany} ${cpu.branding} ${cpu.model}`,
+        name: newConfigName,
+        cpu: `${cpu.company} ${cpu.branding} ${cpu.model}`,
         chipset,
         gpu: `${gpu.company} ${gpu.model}`,
         ram: `${ram.toString()} GB`,

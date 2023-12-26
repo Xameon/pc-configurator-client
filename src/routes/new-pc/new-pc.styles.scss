@@ -5,6 +5,11 @@
   max-width: 1200px;
   margin: 32px auto;
 
+  .config-saved {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
   .buttons-container {
     grid-column: 1 / -1;
 

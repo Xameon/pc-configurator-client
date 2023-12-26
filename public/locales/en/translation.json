@@ -50,7 +50,22 @@
         "2 TB - Rarely does anyone need such a large storage facility. But if you need to store a lot of graphic files or want to install most modern games, then this choice is for you.",
         "4 TB - Do you need to save every moment of your life to pass on your video story to posterity, or have you decided to download all the AAA projects that currently exist? Well, the choice is yours."
       ]
-    }
+    },
+    "prevBtn": "Previous",
+    "nextBtn": "Next",
+    "toConfigBtn": "To configuration"
+  },
+  "newPc": {
+    "createNew": "Create new",
+    "save": "Save config",
+    "saved": "Saved",
+    "newConfigLabel": "New config",
+    "unexpectedError": "Oops, something went wrong..."
+  },
+  "userConfigs": {
+    "selectFromList": "Select your configuration from left list",
+    "noConfigs": "Your configuration list is empty",
+    "delete": "Delete"
   },
   "signIn": {
     "header": "Already have an account?",
@@ -58,8 +73,8 @@
     "email": "Email",
     "password": "Password",
     "signIn": "Sign In",
-    "signInGoogle": "Sign In with Google"
-    
+    "signInGoogle": "Sign In with Google",
+    "wrongCredentials": "Wrong credentials"
   },
   "signUp": {
     "header": "Don't have an account?",
@@ -68,6 +83,8 @@
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
-    "signUp": "Sign Up"
+    "signUp": "Sign Up",
+    "passwordsMismatch": "Passwords mismatch",
+    "unexpectedError": "Perhaps such a user is already registered"
   }
 }

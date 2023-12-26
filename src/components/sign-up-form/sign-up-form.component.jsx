@@ -1,6 +1,7 @@
 import { useState, useContext } from 'react';
 import { API_REQUESTS, request } from '../../api/api';
 import { setLocalStorageItemsHelper } from '../../helpers/local-storage.helper';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { UserContext } from '../../contexts/user.context';
@@ -17,10 +18,13 @@ const defaultFormFields = {
   confirmPassword: '',
 };
 
-const SignUpForm = () => {
+const SignUpForm = ({ setLoaderActive }) => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { name, email, password, confirmPassword } = formFields;
+  const [authError, setAuthError] = useState('');
   const { setCurrentUser } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
   const text = t('signUp', { returnObjects: true });
@@ -30,11 +34,30 @@ const SignUpForm = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
+  const checkSavedConfig = async () => {
+    if (localStorage.getItem('createdConfig')) {
+      await request(API_REQUESTS.userConfigs, 'POST', {
+        header: {},
+        body: JSON.parse(localStorage.getItem('createdConfig')),
+      });
+
+      localStorage.removeItem('createdConfig');
+
+      setLoaderActive(false);
+      navigate('/user-configs');
+    } else {
+      setLoaderActive(false);
+      navigate('/');
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoaderActive(true);
 
     if (password !== confirmPassword) {
-      alert('Password mistmatch');
+      setAuthError(text.passwordsMismatch);
+      setLoaderActive(false);
       return;
     }
 
@@ -51,8 +74,10 @@ const SignUpForm = () => {
       });
 
       setCurrentUser(user);
+      checkSavedConfig();
     } catch (error) {
-      console.log(error);
+      setAuthError(text.unexpectedError);
+      setLoaderActive(false);
     }
   };
 
@@ -62,7 +87,7 @@ const SignUpForm = () => {
       <h3>{text.subheader}</h3>
       <form onSubmit={(e) => handleSubmit(e)}>
         <FormInput
-          label='Name'
+          label={text.name}
           type='text'
           required
           name='name'
@@ -70,7 +95,7 @@ const SignUpForm = () => {
         />
 
         <FormInput
-          label='Email'
+          label={text.email}
           type='email'
           required
           name='email'
@@ -78,7 +103,7 @@ const SignUpForm = () => {
         />
 
         <FormInput
-          label='Password'
+          label={text.password}
           type='password'
           required
           name='password'
@@ -86,14 +111,17 @@ const SignUpForm = () => {
         />
 
         <FormInput
-          label='Confirm Password'
+          label={text.confirmPassword}
           type='password'
           required
           name='confirmPassword'
           onChange={(e) => handleChange(e)}
         />
+        {authError && <div className='error'>{authError}</div>}
         <div className='buttons-container'>
-          <Button type='submit'>{text.signUp}</Button>
+          <Button type='submit' buttonStyle='primary w100'>
+            {text.signUp}
+          </Button>
         </div>
       </form>
     </div>
